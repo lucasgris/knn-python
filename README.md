@@ -95,3 +95,5 @@ See the __demo__ jupyter notebook to check the mainly features.
 - feature_selection_mnist: use some algorithms to perform attributes selection on MNIST database
 
 - pca_mnist: perform a principal component analysis(PCA) in MNIST database to reduce the dimensionality
+
+Nota: os notebooks estão em português.
