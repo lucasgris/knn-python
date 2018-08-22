@@ -1,0 +1,522 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>classifiers package &#8212; KNN Classifier and Impurity Measurements 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">KNN Classifier and Impurity Measurements 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="classifiers-package">
+<h1>classifiers package<a class="headerlink" href="#classifiers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-classifiers.base">
+<span id="classifiers-base-module"></span><h2>classifiers.base module<a class="headerlink" href="#module-classifiers.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classifiers.base.ClassifierBase">
+<em class="property">class </em><code class="descclassname">classifiers.base.</code><code class="descname">ClassifierBase</code><a class="headerlink" href="#classifiers.base.ClassifierBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for classifiers</p>
+<dl class="method">
+<dt id="classifiers.base.ClassifierBase.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.base.ClassifierBase.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must fit the data in a predictable model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="classifiers.base.ClassifierBase.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.base.ClassifierBase.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must predict the class labels of a set of instances</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-classifiers.exceptions">
+<span id="classifiers-exceptions-module"></span><h2>classifiers.exceptions module<a class="headerlink" href="#module-classifiers.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="classifiers.exceptions.NotFittedError">
+<em class="property">exception </em><code class="descclassname">classifiers.exceptions.</code><code class="descname">NotFittedError</code><span class="sig-paren">(</span><em>classifier_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.exceptions.NotFittedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-classifiers.neighbors">
+<span id="classifiers-neighbors-module"></span><h2>classifiers.neighbors module<a class="headerlink" href="#module-classifiers.neighbors" title="Permalink to this headline">¶</a></h2>
+<p>The :mod:’neighbors’ module implements the k-nearest neighbors algorithm.</p>
+<dl class="class">
+<dt id="classifiers.neighbors.DistanceMetric">
+<em class="property">class </em><code class="descclassname">classifiers.neighbors.</code><code class="descname">DistanceMetric</code><a class="headerlink" href="#classifiers.neighbors.DistanceMetric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DistanceMetric class</p>
+<p>This class provides a uniform interface to fast distance metric functions.
+The various metrics can be accessed via the get_metric class method and the
+metric string identifier (see below).</p>
+<p>Available Metrics</p>
+<p>The following lists the string metric identifiers and the associated
+distance metric classes:</p>
+<p>Metrics intended for real-valued vector spaces:</p>
+<p>identifier      class name              distance function
+“euclidean”     EuclideanDistance       sqrt(sum((x - y)^2))
+“manhattan”     ManhattanDistance       sum(<a href="#id1"><span class="problematic" id="id2">|x - y|</span></a>)
+“chebyshev”     ChebyshevDistance       max(<a href="#id3"><span class="problematic" id="id4">|x - y|</span></a>)</p>
+<dl class="class">
+<dt id="classifiers.neighbors.DistanceMetric.ChebyshevDistance">
+<em class="property">class </em><code class="descname">ChebyshevDistance</code><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.ChebyshevDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">classifiers.neighbors._Distance</span></code></p>
+<dl class="method">
+<dt id="classifiers.neighbors.DistanceMetric.ChebyshevDistance.pairwise">
+<code class="descname">pairwise</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.ChebyshevDistance.pairwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the pairwise distances between X.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> – Array of shape (Nx, D), representing Nx points in
+D dimensions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dist : ndarray
+The shape (Nx) array of pairwise distances between points in X</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="classifiers.neighbors.DistanceMetric.EuclideanDistance">
+<em class="property">class </em><code class="descname">EuclideanDistance</code><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.EuclideanDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">classifiers.neighbors._Distance</span></code></p>
+<dl class="method">
+<dt id="classifiers.neighbors.DistanceMetric.EuclideanDistance.pairwise">
+<code class="descname">pairwise</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.EuclideanDistance.pairwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the pairwise distances between X.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> – Array of shape (Nx, D), representing Nx points in
+D dimensions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dist : ndarray
+The shape (Nx) array of pairwise distances between points in X</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="classifiers.neighbors.DistanceMetric.ManhattanDistance">
+<em class="property">class </em><code class="descname">ManhattanDistance</code><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.ManhattanDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">classifiers.neighbors._Distance</span></code></p>
+<dl class="method">
+<dt id="classifiers.neighbors.DistanceMetric.ManhattanDistance.pairwise">
+<code class="descname">pairwise</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.ManhattanDistance.pairwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the pairwise distances between X.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> – Array of shape (Nx, D), representing Nx points in
+D dimensions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dist : ndarray
+The shape (Nx) array of pairwise distances between points in X</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="classifiers.neighbors.DistanceMetric.get_metric">
+<em class="property">static </em><code class="descname">get_metric</code><span class="sig-paren">(</span><em>metric</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.DistanceMetric.get_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the given distance metric from the string identifier.</p>
+<p>See the docstring of DistanceMetric for a list of available metrics.</p>
+<p>The distance metric to use
+:param      metric: string or class name
+:return:    A DistanceMetric object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="classifiers.neighbors.KDTree">
+<em class="property">class </em><code class="descclassname">classifiers.neighbors.</code><code class="descname">KDTree</code><span class="sig-paren">(</span><em>X</em>, <em>leaf_size=40</em>, <em>metric='euclidean'</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KDTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>KDTree for fast generalized N-point problems.</p>
+<dl class="class">
+<dt id="classifiers.neighbors.KDTree.KDTreeBuilder">
+<em class="property">class </em><code class="descname">KDTreeBuilder</code><span class="sig-paren">(</span><em>raw_data</em>, <em>leaf_size</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KDTree.KDTreeBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A KD-Tree builder class</p>
+<dl class="method">
+<dt id="classifiers.neighbors.KDTree.KDTreeBuilder.build">
+<code class="descname">build</code><span class="sig-paren">(</span><em>node</em>, <em>split_feature=0</em>, <em>depth=0</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KDTree.KDTreeBuilder.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build nodes recursively</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="classifiers.neighbors.KDTree.Node">
+<em class="property">class </em><code class="descname">Node</code><span class="sig-paren">(</span><em>node_parent=None</em>, <em>data=None</em>, <em>ids=None</em>, <em>depth=0</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KDTree.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>KD-tree node data structure</p>
+<dl class="attribute">
+<dt id="classifiers.neighbors.KDTree.Node.condition">
+<code class="descname">condition</code><a class="headerlink" href="#classifiers.neighbors.KDTree.Node.condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the condition of this node that represents a condition which
+an arbitrary subtree must satisfy.</p>
+<p>The condition is a callable object that must evaluate if a provided
+value should belong to an arbitrary subtree (if True), or the other
+subtree (if False).</p>
+<p>Use this method to walk over the tree, going to the right or left
+side of it when the condition is satisfied.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KDTree.Node.count">
+<code class="descname">count</code><a class="headerlink" href="#classifiers.neighbors.KDTree.Node.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the amount of elements of this node</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KDTree.Node.data">
+<code class="descname">data</code><a class="headerlink" href="#classifiers.neighbors.KDTree.Node.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the data of this node</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KDTree.Node.ids">
+<code class="descname">ids</code><a class="headerlink" href="#classifiers.neighbors.KDTree.Node.ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the indexes array of the data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KDTree.Node.left">
+<code class="descname">left</code><a class="headerlink" href="#classifiers.neighbors.KDTree.Node.left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the left child node of this node</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KDTree.Node.right">
+<code class="descname">right</code><a class="headerlink" href="#classifiers.neighbors.KDTree.Node.right" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the right child node of this node</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="classifiers.neighbors.KDTree.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>X</em>, <em>k=1</em>, <em>return_distance=True</em>, <em>breadth_first=False</em>, <em>ignore_x=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KDTree.query" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> – array-like, last dimension self.dim
+An array of points to query</li>
+<li><strong>k</strong> – integer (default = 1)
+The number of nearest neighbors to return</li>
+<li><strong>return_distance</strong> – boolean (default = True)
+If True, return a tuple (d, i) of distances and indices if False,
+return array i</li>
+<li><strong>breadth_first</strong> – boolean (default = False)
+If True, then query the nodes in a breadth-first manner.
+Otherwise, query the nodes in a depth-first manner.</li>
+<li><strong>ignore_x</strong> – boolean, optional (default = False)
+If True, ignore the instances in X when computing the distances.
+This is useful when the fit data set contains X.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>i       :   if return_distance == False
+(d,i)   :   if return_distance == True
+d       :   array of doubles - shape: X.shape[:-1] + (k,)</p>
+<blockquote>
+<div><p>each entry gives the list of distances to the
+neighbors of the corresponding point</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>i <span class="classifier-delimiter">:</span> <span class="classifier">array of integers - shape: X.shape[:-1] + (k,)</span></dt>
+<dd><p class="first last">each entry gives the list of indices of neighbors
+of the corresponding point</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="classifiers.neighbors.KNeighborsClassifier">
+<em class="property">class </em><code class="descclassname">classifiers.neighbors.</code><code class="descname">KNeighborsClassifier</code><span class="sig-paren">(</span><em>n_neighbors=5</em>, <em>algorithm='kd_tree'</em>, <em>leaf_size=30</em>, <em>weights='uniform'</em>, <em>dist_metric='euclidean'</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classifiers.base.ClassifierBase" title="classifiers.base.ClassifierBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">classifiers.base.ClassifierBase</span></code></a></p>
+<p>Unsupervised learner for implementing neighbor searches.</p>
+<dl class="attribute">
+<dt id="classifiers.neighbors.KNeighborsClassifier.classes">
+<code class="descname">classes</code><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the class labels of the data set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KNeighborsClassifier.data_classes">
+<code class="descname">data_classes</code><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.data_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the classes of the data set of each instance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KNeighborsClassifier.data_instances">
+<code class="descname">data_instances</code><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.data_instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the instance with the feature values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="classifiers.neighbors.KNeighborsClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the model using X as training data.
+:param X: {array-like, KDTree}</p>
+<blockquote>
+<div>Training data.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> – array-like
+Classes of the respective training data.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classifiers.neighbors.KNeighborsClassifier.ids">
+<code class="descname">ids</code><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the ids of the data set</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="classifiers.neighbors.KNeighborsClassifier.k_neighbors">
+<code class="descname">k_neighbors</code><span class="sig-paren">(</span><em>X</em>, <em>n_neighbors</em>, <em>return_distance=True</em>, <em>ignore_x=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.k_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the K-neighbors of a point.</p>
+<p>Returns indices of and distances to the neighbors of each point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> – array-like, shape (n_query, n_features)
+The query point or points. If not provided, neighbors of each
+indexed point are returned. In this case, the query point is
+not considered its own neighbor.</li>
+<li><strong>n_neighbors</strong> – int
+Number of neighbors to get (default is the value passed to the
+constructor).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>:param return_distance <span class="classifier-delimiter">:</span> <span class="classifier">boolean, optional. Defaults to True.</span></dt>
+<dd>If False, distances will not be returned</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_x</strong> – boolean, optional. Defaults to False.
+If True, ignore the instances in X when computing the distances.
+This is useful when the fit data set contains X.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dist : array
+Array representing the lengths to points, only present if
+return_distance=True
+ind : array
+Indices of the nearest points in the population matrix.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="classifiers.neighbors.KNeighborsClassifier.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em>, <em>ignore_x=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.KNeighborsClassifier.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the class labels for the provided data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> – array-like, shape (n_query, n_features)
+Test samples.</li>
+<li><strong>ignore_x</strong> – boolean, optional. Defaults to False.
+If True, ignore the instances in X when computing the distances.
+This is useful when the fit data set contains X.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">array of shape [n_samples] or [n_samples, n_outputs]
+Class labels for each data sample.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="classifiers.neighbors.brute_force_k_neighbors">
+<code class="descclassname">classifiers.neighbors.</code><code class="descname">brute_force_k_neighbors</code><span class="sig-paren">(</span><em>data</em>, <em>x</em>, <em>ids=None</em>, <em>n_neighbors=5</em>, <em>return_distance=True</em>, <em>dist_f=None</em>, <em>ignore_x=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classifiers.neighbors.brute_force_k_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a brute force search for the k nearest neighbors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – a data to perform the operation
+Note: all features of data will be considered as a dimension
+to calculate the distances</li>
+<li><strong>x</strong> – array-like
+A point to query</li>
+<li><strong>ids</strong> – array-like
+ID’s array of each element of data. If none, the indexes of the data
+array will be considered and returned as a result of the query.</li>
+<li><strong>n_neighbors</strong> – integer (default = 1)
+The number of nearest neighbors to return</li>
+<li><strong>return_distance</strong> – boolean (default = True)
+If True, return a tuple (d, i) of distances and indices if False,
+return array i</li>
+<li><strong>dist_f</strong> – callable (default=None)
+A function distance to calculate the distance between points.
+If no function is provided, the euclidean distance will be used.</li>
+<li><strong>ignore_x</strong> – boolean, optional (default=False)
+If True, ignore the instances in X when computing the distances.
+This is useful when the fit data set contains X.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>i       :   if return_distance == False
+(d,i)   :   if return_distance == True
+d       :   array of doubles - shape: X.shape[:-1] + (k,)</p>
+<blockquote>
+<div><p>each entry gives the list of distances to the
+neighbors of the corresponding point</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>i <span class="classifier-delimiter">:</span> <span class="classifier">array of integers - shape: X.shape[:-1] + (k,)</span></dt>
+<dd><p class="first last">each entry gives the list of ids/indices of neighbors
+of the corresponding point</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-classifiers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-classifiers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">classifiers package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-classifiers.base">classifiers.base module</a></li>
+<li><a class="reference internal" href="#module-classifiers.exceptions">classifiers.exceptions module</a></li>
+<li><a class="reference internal" href="#module-classifiers.neighbors">classifiers.neighbors module</a></li>
+<li><a class="reference internal" href="#module-classifiers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/classifiers.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">KNN Classifier and Impurity Measurements 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Lucas Rafael.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

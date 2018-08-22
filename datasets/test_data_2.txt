@@ -1,0 +1,12 @@
+id sepallength sepalwidth petallength petalwidth class
+6 0 0 1 1 versicolor
+7 1 1 0 1 versicolor
+8 1 0 1 1 versicolor
+9 1 0 0 1 versicolor
+10 1 0 0 1 versicolor
+10 1 0 1 1 versicolor
+12 0 0 1 1 virginica
+13 1 0 0 1 virginica
+14 1 0 1 1 virginica
+15 0 0 1 1 virginica
+16 1 1 0 1 virginica

@@ -1,0 +1,30 @@
+util package
+============
+
+Submodules
+----------
+
+util.base module
+----------------
+
+.. automodule:: util.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+util.dataparser module
+----------------------
+
+.. automodule:: util.dataparser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: util
+    :members:
+    :undoc-members:
+    :show-inheritance:

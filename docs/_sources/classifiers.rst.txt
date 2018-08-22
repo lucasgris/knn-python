@@ -1,0 +1,38 @@
+classifiers package
+===================
+
+Submodules
+----------
+
+classifiers.base module
+-----------------------
+
+.. automodule:: classifiers.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+classifiers.exceptions module
+-----------------------------
+
+.. automodule:: classifiers.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+classifiers.neighbors module
+----------------------------
+
+.. automodule:: classifiers.neighbors
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: classifiers
+    :members:
+    :undoc-members:
+    :show-inheritance:
